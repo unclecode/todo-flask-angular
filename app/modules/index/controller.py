@@ -2,6 +2,8 @@ __author__ = 'unclecode'
 # Import flask dependencies
 from flask import Blueprint, render_template, abort, session, redirect
 
+from app import mongodb
+
 # Define the blueprint: 'XXX', set its url prefix: app.url/PREFIX
 mod_index = Blueprint('index', __name__)
 
