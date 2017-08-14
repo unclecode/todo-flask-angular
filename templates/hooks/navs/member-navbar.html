@@ -1,0 +1,103 @@
+<nav class="navbar navbar-default navbar-fixed-top app-navbar">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#navbar-collapse-main">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://kidocode.com">
+                <img src="http://kidocode.com/img/kidocode-logo-400.png" style="width: 178px" alt="brand">
+            </a>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-collapse-main">
+
+            <ul class="nav navbar-nav hidden-xs">
+                <li class="active">
+                    <a href="/member/go/{{aid}}">Home</a>
+                </li>
+                <!--<li>-->
+                    <!--<a href="profile/index.html">Profile</a>-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<a data-toggle="modal" href="#msgModal">Messages</a>-->
+                <!--</li>-->
+                <!--<li>-->
+                    <!--<a href="docs/index.html">Docs</a>-->
+                <!--</li>-->
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right m-r-0 hidden-xs">
+
+                <li class="panel-menu-item">
+                    <a href="#" class="text-inherit" data-toggle="modal">
+                        Time left:
+                        <span class="m-y-0 task-timer" style="font-weight: bold">00:60:00</span>
+                    </a>
+                </li>
+                <li class="panel-menu-item">
+                    <a href="#" class="text-inherit" data-toggle="modal">
+                        Steps:
+                        <span class="m-y-0 step-summary">0</span>
+                    </a>
+                </li>
+
+                <li class="panel-menu-item">
+                    <a href="#" class="text-inherit" data-toggle="modal">
+                        Score:
+                        <span class="m-y-0 score-summary">0</span>
+                    </a>
+                </li>
+
+                <li class="panel-menu-item">
+                    <a href="#" class="text-inherit" data-toggle="modal">
+                        Bugs:
+                        <span class="m-y-0 bug-summary">0</span>
+                    </a>
+                </li>
+                <li class="panel-menu-item">
+                    <a href="#" class="text-inherit" data-toggle="modal">
+                        #Code:
+                        <span class="m-y-0 line-code-summary">0</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/member/go/{{aid}}">
+                        Your Group ID: <strong class = "group-id-lable">{{session.get('user', {}).get('email', 'guest@kidocode.com').split('@')[0]}}</strong>
+                    </a>
+                </li>
+                <li>
+                    <button class="btn btn-default navbar-btn navbar-btn-avitar" data-toggle="popover">
+
+                        <img class="img-circle group-id-img"
+                             src="https://api.adorable.io/avatars/100/{{ session.get('user', {}).get('email', 'guest@kidocode.com') }}">
+                    </button>
+                </li>
+            </ul>
+
+            <!--<form class="navbar-form navbar-right app-search" role="search">-->
+            <!--<div class="form-group">-->
+            <!--<input type="text" class="form-control" data-action="grow" placeholder="Search">-->
+            <!--</div>-->
+            <!--</form>-->
+
+            <ul class="nav navbar-nav hidden-sm hidden-md hidden-lg">
+                <li><a href="/member/go/{{aid}}">Home</a></li>
+                <!--<li><a href="profile/index.html">Profile</a></li>-->
+                <!--<li><a href="notifications/index.html">Notifications</a></li>-->
+                <!--<li><a data-toggle="modal" href="#msgModal">Messages</a></li>-->
+                <!--<li><a href="docs/index.html">Docs</a></li>-->
+                <!--<li><a href="#" data-action="growl">Growl</a></li>-->
+                <li><a href="/member/logout">Logout</a></li>
+            </ul>
+
+            <ul class="nav navbar-nav hidden">
+                <!--<li><a href="#" data-action="growl">Growl</a></li>-->
+                <li><a href="/member/logout">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
