@@ -1,3 +1,10 @@
-/**
- * Created by unclecode on 04/01/2017.
- */
+var app = angular.module('kportal', []);
+
+app.config(['$interpolateProvider', function($interpolateProvider) {
+  $interpolateProvider.startSymbol('{a');
+  $interpolateProvider.endSymbol('a}');
+}]);
+
+app.controller('mainCtrl', ['$scope', function($scope){
+    $scope.name = "test"
+}])
