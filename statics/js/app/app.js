@@ -1,4 +1,4 @@
-var app = angular.module('kportal', []);
+var app = angular.module('myApp', []);
 
 app.config(['$interpolateProvider', function($interpolateProvider) {
   $interpolateProvider.startSymbol('{a');
@@ -6,5 +6,5 @@ app.config(['$interpolateProvider', function($interpolateProvider) {
 }]);
 
 app.controller('mainCtrl', ['$scope', function($scope){
-    $scope.name = "test"
-}])
+    $scope.name = "Hey, I am here!"
+}]);

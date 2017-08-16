@@ -15,7 +15,7 @@ class Config():
     THREADED=True
     CONFIG_NAME = "Default"
     CONFIG_MOD = '{0} Config at {1}:{2}/'.format(CONFIG_NAME, HOST, str(PORT))
-    SERVER_ADDRESS = "http://fos.kidocode.com/"
+    SERVER_ADDRESS = "http://{0}:{1}/".format(HOST, str(PORT))
     LOGS_FOLDER = BASE_DIR + '/app/.log'
     if not os.path.exists(LOGS_FOLDER):
         os.mkdir(LOGS_FOLDER)

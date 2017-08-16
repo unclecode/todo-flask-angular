@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="kportal">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+
+    <title>
+        {% block title %}{% endblock title %}
+    </title>
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'>
+    <link href="/statics/css/toolkit.css" rel="stylesheet">
+    <link href="/statics/css/template.css" rel="stylesheet">
+    <link href="/statics/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/statics/css/kstyle.css" rel="stylesheet">
+    <link href="/statics/css/wizard.css" rel="stylesheet">
+
+    <style>
+        /* note: this is a hack for ios iframe for bootstrap themes shopify page */
+        /* this chunk of css is not part of the toolkit :) */
+        body {
+            width: 1px;
+            min-width: 100%;
+            *width: 100%;
+        }
+    </style>
+
+    {% block style_top %}{% endblock style_top %}
+
+</head>
+
+
+<body class="with-top-navbar">
+
+{% block script_top %}{% endblock script_top %}
+
+<div class="growl" id="app-growl"></div>
+
+{% include 'hooks/navs/' + (nav_type or 'public') + '-navbar.html' %}
+
+<div class="container p-t-md">
+    <div class="row">
+        {% block leftbar %}
+        {% include 'hooks/sidebars/' + (sidebar_type or 'public') + '-status-sidebar.html' %}
+        {% endblock leftbar %}
+        {% block content %}{% endblock content %}
+        {% block rightbar %}
+        {% include 'hooks/sidebars/' + (sidebar_type or 'public') + '-info-sidebar.html' %}
+        {% endblock rightbar %}
+    </div>
+</div>
+
+<script src="/statics/js/libs/jquery.js"></script>
+<script src="/statics/js/libs/jquery.validate.min.js"></script>
+<script src ="/statics/js/libs/angular.js"></script>
+<script src="/statics/js/template/chart.js"></script>
+<script src="/statics/js/template/toolkit.js"></script>
+<script src="/statics/js/template/template.js"></script>
+<script src="/statics/js/app.js"></script>
+<script>
+    // execute/clear BS loaders for docs
+    $(function () {
+        if (window.BS && window.BS.loader && window.BS.loader.length) {
+            while (BS.loader.length) {
+                (BS.loader.pop())()
+            }
+        }
+    })
+</script>
+
+
+<!--<script src="http://www.youtube.com/iframe_api"></script>-->
+
+
+<script src="/statics/js/libs/skulpt.min.js" type="text/javascript"></script>
+<script src="/statics/js/libs/skulpt-stdlib.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+    function builtinRead(x) {
+        if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+            throw "File not found: '" + x + "'";
+        return Sk.builtinFiles["files"][x];
+    }
+</script>
+
+
+<!-- load ace -->
+<script src="/statics/js/libs/ace.js" type="text/javascript" charset="utf-8"></script>
+<!-- load ace language tools -->
+<script src="/statics/js/libs/ext-language_tools.js" type="text/javascript"
+        charset="utf-8"></script>
+<script src="/statics/js/libs/keybinding-emacs.js" type="text/javascript"
+        charset="utf-8"></script>
+<script>
+    ace.require("ace/ext/language_tools");
+    ace.require("ace/keyboard/emacs");
+
+    $(window).on('beforeunload', function () {
+        $(window).scrollTop(0);
+    });
+
+</script>
+
+
+{% block script_bottom %}{% endblock script_bottom %}
+</body>
+</html>
+

@@ -30,6 +30,7 @@ def run_server():
     # import logging
     # logging.basicConfig(filename='../logs/kportal/error.log', level=logging.DEBUG)
 
+
     #run using socketio
     #socketio.run(app, host = app.config['HOST'], port = app.config['PORT']) #, debug=True,threaded=True)
 
