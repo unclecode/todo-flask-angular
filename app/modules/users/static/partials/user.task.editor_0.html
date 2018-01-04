@@ -1,0 +1,38 @@
+<!--To Edit current task-->
+<div class="new-task">
+    <div class="card k-bg-yellow mb-0 border-0">
+        <div class="card-body">
+            <h6 class="card-subtitle mb-2 font-weight-bold k-dark">I like to do...</h6>
+            <div class="card-text mb-3">
+                                    <textarea ng-model="task.changes.content"
+                                              class="k-form form-control w-100 mb-2 k-border-dark-yellow k-border-width-3 k-blue-focus"
+                                              rows="5"></textarea>
+                <tags-input name="tags" ng-model="task.changes.tags"
+                            class="new-task-tags form-control dark-placeholder k-bg-transparent flat-box w-100 task-new-input k-border-blue">
+                    <auto-complete source="vm.loadTags($query)"></auto-complete>
+                </tags-input>
+                <div class="row mt-2">
+                    <div class="col">
+                        <input ng-model="task.changes.duration"
+                               class="k-form form-control w-100 mb-2 k-border-dark-yellow k-border-width-3 k-blue-focus"
+                               type="number"
+                               min="1"
+                               style="padding: 4px;"
+                               placeholder="Task Duration">
+                    </div>
+                    <div class="col text-right">
+                        <select ng-model="task.changes.duration_type"
+                                class="k-form duration-type form-control  k-border-dark-yellow k-border-width-3 k-blue-focus">
+                            <option value="day" selected>Days</option>
+                            <option value="hour">Hours</option>
+                            <option value="month">Month</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <a href="" class="card-link k-link-dark font-weight-bold" ng-click="vm.saveTask(task)">Save
+                it</a>
+            <a href="" class="card-link k-link-dark" ng-click="vm.cancelEditTask(task)">Cancel</a>
+        </div>
+    </div>
+</div>

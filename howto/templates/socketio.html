@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+<script type="text/javascript" charset="utf-8">
+    var scheme = 'http://' + document.domain + ':5001'
+    var socket = io.connect('http://' + document.domain + ':5001');
+    socket.on('connect', function () {
+
+        socket.emit('event', {data: 'I\'m connected!'}, function(data, code){
+            console.log(data); console.log(code);
+            return 5;
+        });
+    });
+
+    dbs = io.connect(scheme + '/db')
+    dbs.on('connect', function () {
+        dbs.emit('event', {data: 'db connected!'}, function(data, code){console.log(data); console.log(code)});
+    })
+    stream = io.connect(scheme + '/stream')
+    stream.on('connect', function () {
+        stream.emit('event', {data: 'stream connected!'}, function(data, code){console.log(data); console.log(code)});
+    })
+
+    dbs.on('message', function(data){
+        console.log("/db >>>" + data)
+    })
+
+    stream.on('message', function(data){
+        console.log("/stream >>>" + data)
+    })
+
+    socket.on('message', function(data){
+        console.log("/ >>>" + data)
+    })
+
+    socket.on('get', function(data){
+        console.log("/ >>> get: " + data)
+    })
+
+    stream.on('get', function(data){
+        console.log("/stream >>> get: " + data)
+    })
+
+
+    function nsEmit(sc){
+        sc.emit('event', {data: 'Data!'}, function(data, code){console.log(data); console.log(code)});
+    }
+
+    function mulriParameters(){
+        socket.emit('event1', 3, 4, 5, function(data, code){console.log(data); console.log(code)});
+    }
+
+    function join(){
+        sc.emit('join', {id: 'tom'}, function(data, code){console.log(data); console.log(code)});
+    }
+
+</script>
+
+</body>
+</html>

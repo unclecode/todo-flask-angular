@@ -1,0 +1,45 @@
+{% extends "/layouts/layoutCenter.html" %}
+
+{% block style_top%}
+<link rel="stylesheet" href="{{ url_for('users.static', filename='css/users.css') }}">
+{% endblock style_top %}
+{% block header %}
+<nav class="navbar navbar-expand-lg navbar-light k-bg-yellow k-texture-crissxcross">
+    <!--<div class="container">-->
+    <a class="navbar-brand" href="#">Task Stage</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTaskStages"
+            aria-controls="navbarTaskStages" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-md-start" id="navbarTaskStages">
+        <ul class="navbar-nav mr-auto"  >
+            <li class="nav-item" ng-repeat="(status, obj) in vm.tasks" ng-class="{'active' : obj.active}">
+                <a class="nav-link" href="" ng-cloak ng-click = "vm.selectStage(status); ">{a status | titlecase a}</a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-md-0 w-50 hidden-md-down justify-content-md-end">
+            <input ng-model="vm.filterConfig.query"
+                   ng-enter = "vm.filterAll()"
+                   ng-esc = "vm.filterConfig.query = '';vm.filterAll()"
+                   class="form-control flat-box w-100"
+                   type="text"
+                   placeholder="Search"
+                   aria-label="Search">
+        </form>
+    </div>
+    <!--</div>-->
+</nav>
+
+
+
+{% endblock header%}
+
+{% block content %}
+<div style="height: 100%" ng-view></div>
+{% endblock content %}
+
+{% block script_bottom %}
+<script src="{{ url_for('users.static', filename ='js/users.app.js') }}"></script>
+<script src="{{ url_for('users.static', filename ='js/users.directive.task.editor.js') }}"></script>
+{% endblock script_bottom %}

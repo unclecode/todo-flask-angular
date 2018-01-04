@@ -12,6 +12,7 @@ class Config():
     HOST = os.environ.get('WWWHOST', os.environ.get('IP', "0.0.0.0"))
     PORT = int(os.environ.get('WWWPORT', os.environ.get('PORT', 5050)))
     STATIC_FOLDER = "statics"
+    #EXPLAIN_TEMPLATE_LOADING = True
     THREADED=True
     CONFIG_NAME = "Default"
     CONFIG_MOD = '{0} Config at {1}:{2}/'.format(CONFIG_NAME, HOST, str(PORT))
@@ -23,55 +24,52 @@ class Config():
 
     # Define the database - we are working with
     import json
-    try:
-        config_data = json.loads(open('key.txt').read())
-    except:
-        config_data = {}
-        pass
+    config_data = json.loads(open( BASE_DIR + '/key.json').read())
+
     DATABASES = {
-        'mongo': {
-            'auth': True,
-            'dbname': os.environ.get('DBNAME', config_data.get('DBNAME', 'YOURDBNAME')),
-            'url': os.environ.get('DBCONSTR', config_data.get('DBCONSTR', '')),
-        },
-        'redis': {
-            'url': os.environ.get('REDISURL', 'redisToGOURL')
-        }
+        'dbname': os.environ.get('DBNAME', config_data.get('DBNAME', 'YOURDBNAME')),
+        'url': os.environ.get('DBCONSTR', config_data.get('DBCONSTR', '')),
     }
-    DATABASE_CONNECT_OPTIONS = {}
+
+    # MongoEngine Settings
+    MONGODB_DB = os.environ.get('DBNAME', config_data.get('DBNAME', 'YOURDBNAME'))
+    MONGODB_HOST = os.environ.get('DBCONSTR', config_data.get('DBCONSTR', 'mongodb://localhost/' + MONGODB_DB))
+
+    # flak-mail
+    MAIL_SERVER = "SMTP.GMAIL.COM"
+    MAIL_PORT = 587
+    MAIL_USE_TLS = True
+    MAIL_USERNAME = os.environ.get('MAIL_USERNAME', '')
+    MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD', '')
+    MAIL_DEFAULT_SENDER = "DidIt Assistant"
+    MAIL_DEBUG = False
+    # MAIL_MAX_EMAILS for those mailserver that have limit for number of emails you can send in one open connection
+
+
+    # S3 Bucket
+    FLASKS3_BUCKET_NAME = 'unclecode.test.assets'
+    AWS_ACCESS_KEY_ID = "AKIAIJ7GI62JML4A3G6Q"
+    AWS_SECRET_ACCESS_KEY = "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"
+    FLASKS3_REGION = "ap-southeast-1"
+    FLASKS3_FORCE_MIMETYPE = True
+    FLASKS3_USE_HTTPS = False
+    FLASKS3_GZIP = True
+    FLASKS3_DEBUG = False
+    FLASKS3_ACTIVE = False
+
+    #Flask Assets
+    ASSETS_DEBUG = True
+    FLASK_ASSETS_USE_S3 = False
+
     TEMPLATES_AUTO_RELOAD = False
-
-    # AWS
-    AWS_ID = os.environ.get('AWS_ID', config_data.get('AWS_ID', ''))
-    AWS_KEY = os.environ.get('AWS_KEY', config_data.get('AWS_KEY', ''))
-    AWS_END_POINT_STATIC = ""
-    S3_AWS_ID = os.environ.get('S3_KEY_ID', config_data.get('S3_KEY_ID', ''))
-    S3_AWS_KEY = os.environ.get('S3_ACCESS_KEY', config_data.get('S3_ACCESS_KEY', ''))
-
-    # EMAILS
-    EMAILS = {
-        'info': {
-            'smtp': (config_data.get('smtp', ''), config_data.get('smtp_port', 0)),
-            'auth': (config_data.get('email', ''), os.environ.get('EMAIL_PASS', config_data.get('email_pass', '')))
-
-        }
-    }
-
-    # Application threads. A common general assumption is
-    # using 2 per available processor cores - to handle
-    # incoming requests using one and performing background
-    # operations using the other.
-    # THREADS_PER_PAGE = 2
-
+    THREADS_PER_PAGE = 2
     # Enable protection agains *Cross-site Request Forgery (CSRF)*
     CSRF_ENABLED = True
-
     # Use a secure, unique and absolutely secret key for
-    # signing the data.
-    CSRF_SESSION_KEY = config_data.get('CSRF', '145a6adc782a11e7a5c4985aebdbba9e')
-
+    CSRF_SESSION_KEY = config_data.get('CSRF', 'e06f08d32ede16d1c911c01b93f7ae79deeaca48db5cb7ed')
     # Secret key for signing cookies
-    SECRET_KEY = config_data.get('SESSION', '1f08bb78782a11e7b7a0985aebdbba9e')
+    # Follow this to have good key import os; key = os.urandom(24)
+    SECRET_KEY = config_data.get('SECRET_KEY', '7a09ed6bec52ecc6c06039d965e466be85f8bd3e3d87b33b')
 
     def getConfigMode(self):
         return '{0} at {1}:{2}/'.format(Config.CONFIG_NAME, Config.HOST, str(Config.PORT))
@@ -80,9 +78,27 @@ class Config():
 class LocalDev(Config):
     DEBUG = True
     EXE_MODE = 'dev'
-    PORT = 8080
+    PORT = 9090
     HOST = '0.0.0.0'
     CONFIG_NAME = "Development Server"
+    CONFIG_MOD = '{0} at {1}:{2}/'.format(CONFIG_NAME, HOST, str(PORT))
+    SERVER_ADDRESS = 'http://{0}:{1}/'.format(HOST, str(PORT))
+    TEMPLATES_AUTO_RELOAD = True
+
+class LocalDevOptimized(LocalDev):
+    ASSETS_DEBUG = False
+    FLASKS3_DEBUG = True
+    FLASKS3_ACTIVE = True
+    FLASK_ASSETS_USE_S3 = True
+    CONFIG_NAME = "Development Server (Asset Optimized, S3)"
+
+class Release(Config):
+    DEBUG = False
+    ASSETS_DEBUG = False
+    EXE_MODE = 'prc'
+    PORT = 80
+    HOST = '0.0.0.0'
+    CONFIG_NAME = "Release Server"
     CONFIG_MOD = '{0} at {1}:{2}/'.format(CONFIG_NAME, HOST, str(PORT))
     SERVER_ADDRESS = 'http://{0}:{1}/'.format(HOST, str(PORT))
     TEMPLATES_AUTO_RELOAD = True

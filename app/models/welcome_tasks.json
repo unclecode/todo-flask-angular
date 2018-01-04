@@ -1,0 +1,24 @@
+{
+  "tasks": [
+    {
+      "content": "Here is your backlog tasks! Task you like to do it in close or far future! A book you like to read, an course you like to attend, a place you like to visit, a car you want to buy, a project you have to launch in next year and so on! When is the time to consider them as your current tasks to do then move them into to do list",
+      "status": "backlog",
+      "tags":["welcome"]
+    },
+    {
+      "content": "Task you have to do at the moment. This is list of tasks, activities you are going to start asap or in very close future! Some of these tasks came from your backlog and now it's time to start! Them moment you start any of these tasks then that task stage is on progress!",
+      "status": "todo",
+      "tags":["welcome"]
+    },
+    {
+      "content": "Tasks that you are working on them currently! Please remember if you are going to start the task, it should be in \"I Have to Do\" or your ToDo list, but if its already started then it's a \"I am Doing\" task",
+      "status": "progress",
+      "tags":["welcome"]
+    },
+    {
+      "content": "Congratulation! If you are here means you did it! All done tasks finally land here under your \"Idid it\" stage.",
+      "status": "done",
+      "tags":["welcome"]
+    }
+  ]
+}

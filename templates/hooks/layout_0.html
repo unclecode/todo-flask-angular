@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="">
+
+    <title>{% block title %} Page Title {% endblock title %}</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="{{ url_for('static', filename = 'css/ie10-viewport-bug-workaround.css') }}" type="text/css"  rel="stylesheet">
+
+    {% assets "js_lib_ie" %}
+        <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+    {% endassets %}
+    <!--<script src="{{ url_for('static', filename = 'js/app/app.js')}}"></script>-->
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Bootstrap core CSS -->
+    {% assets "css_all" %}
+    <link href="{{ ASSET_URL }}" type="text/css"  rel="stylesheet">
+    {% endassets %}
+
+    {% assets "less_all" %}
+    <link href="{{ ASSET_URL }}" type="text/css"  rel="stylesheet">
+    {% endassets %}
+
+    <!--<link href="{{ url_for('static', filename = 'css/kstyle.css') }}" type="text/css"  rel="stylesheet">-->
+    <!--<link href="{{ url_for('static', filename = 'css/compiled_style.css') }}" type="text/css"  rel="stylesheet">-->
+
+    {% block style_top %}{% endblock style_top %}
+</head>
+
+<body ng-controller="mainCtrl">
+
+{% block script_top %}{% endblock script_top %}
+<div class="container">
+    {% block content %}
+    {% endblock content %}
+</div>
+<!-- /container -->
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
+<script>window.jQuery || document.write('<script src="{{ url_for("static", filename = "js/libs/jquery.js")}}"><\/script>}}')</script>
+<script src="{{ url_for('static', filename = 'js/libs/bootstrap.min.js')}}"></script>
+
+<!--&lt;!&ndash; IE10 viewport hack for Surface/desktop Windows 8 bug &ndash;&gt;-->
+<!--<script src="{{ url_for('static', filename = 'js/libs/ie10-viewport-bug-workaround.js')}}"></script>-->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-route.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-resource.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-resource.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.1/angular-moment.min.js"></script>
+
+
+{% assets "js_app" %}
+    <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+{% endassets %}
+<!--<script src="{{ url_for('static', filename = 'js/app/app.js')}}"></script>-->
+
+{% block script_bottom %}{% endblock script_bottom %}
+</body>
+</html>

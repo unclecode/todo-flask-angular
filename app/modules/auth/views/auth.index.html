@@ -1,0 +1,23 @@
+{% extends "/layouts/layoutCenter.html" %}
+
+{% block style_top%}
+<link rel="stylesheet" href="{{ url_for('auth.static', filename='css/auth.css') }}">
+{% endblock style_top %}
+
+{% block navbar %}
+{% endblock navbar %}
+
+{% block header %}
+{% endblock header%}
+
+{% block content %}
+<div ng-view></div>
+{% endblock content %}
+
+{% block footer %}
+{% endblock footer%}
+
+
+{% block script_bottom %}
+<script src="{{ url_for('auth.static', filename ='js/auth.app.js') }}"></script>
+{% endblock script_bottom %}

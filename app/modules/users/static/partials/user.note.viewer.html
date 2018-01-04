@@ -1,0 +1,28 @@
+<div class="card-body task task-type-{a task.type a}" id="{a task.task_id a}">
+    <div class="row mt-0 pt-0 mb-2 k-bg-yellow-light mx-0"
+         dnd-draggable="task"
+         dnd-type="task.status"
+         dnd-disable-if="task.status == 'done'"
+         dnd-effect-allowed="move"
+         dnd-moved="vm.tasks[stage].tasks.splice($index, 1)">
+        <div class="pl-0 col">
+            <a href="#{a tag a}"
+               class="badge k-dark k-bg-yellow mr-1 ml-0"
+               ng-repeat="tag in task.tags">#{a tag a}</a>
+        </div>
+        <div class="col text-right pr-0">
+            <small>
+                {a task.time.updated[1] a}
+            </small>
+        </div>
+    </div>
+    <div class="card-text mb-3 task-content" ng-bind-html="task.content">
+    </div>
+    <a href="" class="card-link k-link-dark"
+       ng-if="vm.tasks[stage].ui.action"
+       ng-click="task.edit()">Edit</a>
+
+    <a href="" class="card-link k-link-dark"
+       ng-click="task.ignore(vm.ignoreTask)">Ignore</a>
+
+</div>

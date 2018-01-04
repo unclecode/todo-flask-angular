@@ -1,0 +1,45 @@
+
+<div id="login" ng-controller="authCtrl as vm" class="k-bg-yellow row d-flex align-items-center k-texture-crissxcross">
+    <div class="container ">
+
+        <form class="form-signin" name = "vm.frmSign" ng-submit="vm.signIn()" novalidate>
+            <h2 class="form-signin-heading">
+                <span class="oi oi-check k-blue" title="icon name" style=""></span>
+                <strong style="    font-size: 1.1em;letter-spacing: -5px;">Did It</strong><br>
+                <span style="letter-spacing: -2.5px">Assistant</span></h2>
+            <div class="help-error-block mb-2" ng-show="vm.signed < 0">
+                <p class="mb-0">{a vm.signErrorMsg a}</p>
+            </div>
+            <label for="inputEmail" class="sr-only">Email address</label>
+            <input ng-model="vm.user.email" type="email" name="email" id="inputEmail" class="form-control"
+                   placeholder="Email address" required=""
+                   autofocus="">
+            <div class="help-error-block mb-2" ng-messages="vm.frmSign.email.$error" ng-show="vm.frmSign.email.$touched && vm.frmSign.email.$invalid">
+                <div ng-messages-include="static/partials/auth.errors.html"></div>
+            </div>
+
+            <label for="inputPassword" class="sr-only">Password</label>
+            <input ng-model="vm.user.pwd" type="password" name="password" id="inputPassword" class="form-control"
+                   placeholder="Password" required="">
+            <div class="help-error-block mb-2" ng-messages="vm.frmSign.password.$error" ng-show="vm.frmSign.password.$touched && vm.frmSign.password.$invalid">
+                <div ng-messages-include="static/partials/auth.errors.html"></div>
+            </div>
+
+            <div class="row mt-2">
+                <div class="col">
+                    <div class="checkbox">
+                        <label>
+                            <input ng-model="vm.user.remember" type="checkbox" value="remember-me"> Remember me
+                        </label>
+                    </div>
+                </div>
+                <div class="col text-right">
+                    <a href="#!reg" class="k-link-dark">Register Me</a>
+                </div>
+            </div>
+
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        </form>
+
+    </div>
+</div>

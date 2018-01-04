@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="https://cdn.ably.io/lib/ably.min-1.js"></script>
+</head>
+<body>
+
+<script>
+    var realtime = Ably.Realtime;
+    var client = new Ably.Realtime('LMArLQ.8Bd7uw:dSVR6av2kCPAF_ZX')
+    client.connection.on('connected', function () {
+        console.log('connected')
+    });
+    client.connection.on('failed', function () {
+        console.log('failed')
+    });
+    var channel = client.channels.get('test');
+    channel.subscribe('stream', function (message) {
+        console.log(message.name)// 'myEvent'
+        console.log(message.data)// 'myData'
+    });
+
+    var pb = function () {
+        channel.publish('greeting', 'Hello World!', function (err) {
+            if (err) {
+                console.log('publish failed with error ' + err);
+            } else {
+                console.log('publish succeeded');
+            }
+        })
+    }
+</script>
+</body>
+</html>

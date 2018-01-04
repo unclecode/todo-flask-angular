@@ -1,0 +1,30 @@
+js_app:
+  contents:
+    - js/app/*.js
+  filters: jsmin
+  output: js/packed_app.js
+js_lib_ie:
+  filters: jsmin
+  contents:
+    - js/libs/ie/*.js
+  output: js/packed_lib_ie.js
+css_all:
+  contents:
+    - css/kstyle.css
+  filters: cssutils
+  output: css/packed_all.css
+user_view_js:
+  contents:
+    - users/static/c
+less_all:
+  contents:
+    - css/less/*.less
+  output: css/compiled_style.css
+  filters: less
+
+# js_lib_ie = Bundle('js/libs/ie/*.js', filters='jsmin', output='js/packed_lib_ie.js')
+# js_app = Bundle('js/app/*.js', filters='jsmin', output='js/packed_app.js')
+# css_all = Bundle('css/kstyle.css', 'css/navbar-fixed-top.css', filters='jsmin', output='css/packed_all.css')
+# assets.register('css_all', css_all)
+# assets.register('js_lib_ie', js_lib_ie)
+# assets.register('js_app', js_app)

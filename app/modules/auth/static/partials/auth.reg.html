@@ -1,0 +1,48 @@
+<div id="login" ng-controller="authCtrl as vm" class="k-bg-yellow row d-flex align-items-center k-texture-crissxcross">
+    <div class="container ">
+
+        <form id="vm.frmSignUp" name="vm.frmSignUp" class="form-signin" ng-submit="vm.signUp()" novalidate>
+            <h2 class="form-signin-heading">
+                <span class="oi oi-check k-blue" title="icon name" style=""></span>
+                <strong style="    font-size: 1.1em;letter-spacing: -5px;">Did It</strong><br>
+                <span style="letter-spacing: -2.5px">Assistant</span></h2>
+            <div class="help-error-block mb-2" ng-show="vm.signed < 0">
+                <p class="mb-0">{a vm.signErrorMsg a}</p>
+            </div>
+            <label for="inputEmail" class="sr-only">Email address</label>
+            <input type="email" name="email" ng-model="vm.user.email" id="inputEmail" class="form-control"
+                   placeholder="Email address"  required autofocus="">
+            <div class="help-error-block mb-2" ng-messages="vm.frmSignUp.email.$error" ng-show="vm.frmSignUp.email.$touched && vm.frmSignUp.email.$invalid">
+                <div ng-messages-include="static/partials/auth.errors.html"></div>
+            </div>
+            <label for="inputPassword" class="sr-only">Password</label>
+            <input type="password" name="password" ng-model="vm.user.pwd" id="inputPassword" class="form-control"
+                   placeholder="Password" required="">
+            <div class="help-error-block mb-2" ng-messages="vm.frmSignUp.password.$error" ng-show="vm.frmSignUp.password.$touched && vm.frmSignUp.password.$invalid">
+                <div ng-messages-include="static/partials/auth.errors.html"></div>
+            </div>
+            <label for="inputPassword" class="sr-only">Repeat Password</label>
+            <input type="password" name="secondPassword" ng-model="vm.user.secondPassword" id="secondPassword"
+                   class="form-control" placeholder="Repeat Password" required="" confirm-password="">
+            <div class="help-error-block mb-2" ng-messages="vm.frmSignUp.secondPassword.$error" ng-show="vm.frmSignUp.secondPassword.$touched && vm.frmSignUp.secondPassword.$invalid">
+                <div ng-messages-include="static/partials/auth.errors.html"></div>
+            </div>
+            <!--<div>{a vm.frmSignUp.$invalid a}</div>-->
+            <div class="row">
+                <div class="col">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" value="remember-me"> Remember me
+                        </label>
+                    </div>
+                </div>
+                <div class="col text-right">
+                    <a href="#!" class="k-link-dark">Sign In Page</a>
+                </div>
+
+            </div>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+        </form>
+
+    </div>
+</div>

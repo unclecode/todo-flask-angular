@@ -1,0 +1,202 @@
+<nav ng-if="vm.alert.visible" class="navbar navbar-expand-lg navbar-light k-white k-bg-{a vm.alert.color a}">
+    <a class="navbar-brand k-link-white k-white-imp" href="">{a vm.alert.caption a}</a>
+
+    <div class="collapse navbar-collapse justify-content-md-start">
+        {a vm.alert.message a}
+    </div>
+    <div class="navbar-collapse collapse justify-content-end" id="mainNavbar">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+                <a class="nav-link k-white-imp" href="#" ng-click="vm.alert.visible = false">Close</a>
+            </li>
+        </ul>
+    </div>
+    <!--</div>-->
+</nav>
+<div class="container-fluid" style="height:100%">
+    <div id="stages" class="row mt-2">
+        <div class="col-xl-3 d-none d-xl-block"
+             ng-class="{'active-stage':vm.tasks[stage].active}"
+             ng-repeat="stage in vm.stages"
+             ng-init="dateFilters = ['all', 'today', 'week', 'month']">
+
+            <!--stage top tool bar, caption, filters, and search-->
+            <div class="mb-2">
+                <!--tage caption - date filters and ordered by-->
+                <ul class="list-unstyled mb-0">
+                    <!--caption-->
+                    <li class="">
+                        <div class="row mt-2">
+                            <div class="col font-weight-bold ">
+                                <a href=""
+                                   ng-cloak=""
+                                   ng-click="vm.tasks[stage].filter.delayed = false; vm.filter(stage)"
+                                   class="badge k-white k-bg-blue">{a vm.tasks[stage].count.total a}</a>
+                                <a href=""
+                                   ng-cloak=""
+                                   ng-click="vm.tasks[stage].filter.delayed = true; vm.filter(stage)"
+                                   class="badge k-white k-bg-red">{a vm.tasks[stage].count.delayed a}</a>
+                                <span class="align-middle">{a vm.tasks[stage].ui.caption a}</span>
+                            </div>
+                            <div class="col text-right">
+
+                                <ul class="list-inline">
+                                    <li class="list-inline-item">
+                                        <a class="k-link-dark align-middle" href=""
+                                           ng-click="vm.tasks[stage].ui.filterBox = !vm.tasks[stage].ui.filterBox ">
+                                            {a vm.tasks[stage].ui.filterBox ? 'Hide Filter' : 'Filter' a}
+                                        </a>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <a class="k-link-dark align-middle" href=""
+                                           ng-if="['backlog', 'todo'].indexOf(stage) != -1"
+                                           ng-click="vm.tasks[stage].newTask.type = 'task'; vm.tasks[stage].ui.newTask = true">New Task</a>
+                                    </li>
+                                    <li class="list-inline-item d-none">
+                                        <a class="k-link-dark align-middle" href=""
+                                           ng-if="['backlog', 'todo'].indexOf(stage) != -1"
+                                           ng-click="vm.tasks[stage].newTask.type = 'note'; vm.tasks[stage].ui.newTask = true">Note</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!--clear filter-->
+                    <li class="text-right" ng-show="vm.tasks[stage].ui.filterBox">
+                        <small>
+                            <a class="k-link-blue align-middle" href=""
+                               ng-click="vm.clearFilter(stage); vm.tasks[stage].ui.filterBox = false">
+                                Clear Filter
+                            </a>
+                        </small>
+                    </li>
+                    <!--date filter-->
+                    <li ng-show="vm.tasks[stage].ui.filterBox">
+                        <small class="d-b w-100">
+                            <span class="font-weight-bold align-middle">Filter Date: </span>
+                            <a href=""
+                               ng-if="filter !== 'custom'"
+                               ng-cloak
+                               ng-class="{'badge k-white-imp k-bg-blue' : vm.tasks[stage].filter.flag == filter }"
+                               ng-click="vm.toggleDateFilter(stage, true); vm.tasks[stage].filter.flag = filter; vm.filter(stage)"
+                               class="filter-link mr-2 k-link-blue align-middle" ng-repeat="filter in dateFilters">{a
+                                filter
+                                a}</a>
+                            <a href=""
+                               ng-class="{'badge k-white-imp k-bg-blue' : vm.tasks[stage].filter.flag == 'custom' }"
+                               ng-click="vm.tasks[stage].filter.flag = 'custom'; vm.toggleDateFilter(stage);"
+                               class="filter-link mr-2 k-link-blue align-middle">custom</a>
+                        </small>
+
+                    </li>
+                    <!--sort filter-->
+                    <li ng-show="vm.tasks[stage].ui.filterBox">
+                        <small class="d-b w-100">
+                            <span class="font-weight-bold align-middle">Ordered by: </span>
+                            <a href=""
+                               ng-class="{'badge k-white-imp k-bg-blue' : vm.tasks[stage].filter.sortedBy == key}"
+                               ng-click="vm.tasks[stage].filter.sortedBy = key; vm.filter(stage)"
+                               class="filter-link mr-2 k-link-blue align-middle"
+                               ng-repeat="(key, value) in {'-time_updated':'Created', 'left_hours':'Remain Time'}">
+                                {a value a}</a>
+                        </small>
+
+                    </li>
+                </ul>
+
+                <!--custom date filter-->
+                <div class="row mt-2" ng-show="vm.tasks[stage].ui.selectingDate && vm.tasks[stage].ui.filterBox">
+                    <div class="col">
+                        <input ng-model="vm.tasks[stage].filter.std"
+                               class="k-form form-control form-control-sm w-100 mb-2 k-border-light0 k-border-width-3 k-blue-focus"
+                               type="date"
+                               style="padding: 4px;"
+                               placeholder="Task Duration">
+                    </div>
+                    <div class="col">
+                        <input ng-model="vm.tasks[stage].filter.end"
+                               class="k-form form-control form-control-sm w-100 mb-2 k-border-light0 k-border-width-3 k-blue-focus"
+                               type="date"
+                               style="padding: 4px;"
+                               placeholder="Task Duration">
+                    </div>
+                    <div class="col">
+                        <a href="" class="align-middle" ng-click="vm.filter(stage)">Apply</a>
+                        <!--<a href="" ng-click="vm.tasks[stage].ui.selectingDate = false; vm.tasks[stage].filter.flag = ''">Cancel</a>-->
+                    </div>
+                </div>
+
+                <!--search-->
+                <form class="form-inline my-2 my-md-0 w-100">
+                    <input ng-model="vm.tasks[stage].filter.query"
+                           ng-esc="vm.tasks[stage].filter.query = '';vm.filter(stage)"
+                           ng-enter="vm.filter(stage)"
+                           class="form-control flat-box w-100 task-stage-search k-border-{a vm.tasks[stage].ui.color a}"
+                           type="text" placeholder="Search and press enter" aria-label="Search">
+                </form>
+
+
+                <!--New Task Box-->
+                <task-editor
+                        ng-show="vm.tasks[stage].ui.newTask"
+                        task-changes-obj="vm.tasks[stage].newTask"
+                        card-class="card k-border-blue k-bg-yellow k-border-width-3 mb-3"
+                        save="vm.newTask(stage)"
+                        tags="vm.loadTags($query)"
+                        cancel="vm.tasks[stage].ui.newTask = false"></task-editor>
+
+
+            </div>
+
+            <!--Task List Loop-->
+            <div id="{a stage a}"
+                 class="taskList "
+                 dnd-allowed-types="vm.stages"
+                 dnd-list="vm.tasks[stage].tasks"
+                 dnd-drop="vm.dragDrop(index, item, external, type, event, stage)"
+                 style="padding-bottom: 95px;">
+
+                <!--multi task selection toolbar-->
+                <div class="card k-border-light0 k-border-width-3 mb-3 bulk-actions"
+                     ng-show="vm.tasks[stage].selectedTasks.length!= 0">
+                    <div class="card-body ">
+                        <div class="card-text task-content">
+                            <a class="card-link k-link-dark">{a vm.tasks[stage].selectedTasks.length a} Tasks: </a>
+                            <a href="" class="card-link k-link-{a vm.tasks[stage].ui.fcolor a} font-weight-bold"
+                               ng-click="vm.moveTasks(stage)">{a vm.tasks[stage].ui.action a}</a>
+                            <a href="" class="card-link k-link-dark"
+                               ng-click="vm.ignoreTasks(stage)">Ignore</a>
+                            <a href="" class="card-link k-link-dark"
+                               ng-click="vm.unSelectTasks(stage)">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!--task body-->
+                <div class="card k-border-{a vm.tasks[stage].ui.color a} k-border-width-3 mb-3"
+                     ng-class="{'delayed-task': task.time.delayed, 'task-note': task.type == 'note'}"
+                     ng-hide="task.deleted"
+                     ng-repeat="task in vm.tasks[stage].tasks">
+
+                    <task-viewer ng-if = "task.type == 'task'" ng-hide="task.inEdit"></task-viewer>
+                    <!--<note-viewer ng-if = "task.type == 'note'" ng-hide="task.inEdit"></note-viewer>-->
+
+                    <!--save="vm.saveTask(task)"-->
+                    <!--cancel="vm.cancelEditTask(task)"></task-editor>-->
+                    <task-editor
+                            ng-if="task.inEdit"
+                            task-changes-obj="task.changes"
+                            save="task.save(task)"
+                            cancel="task.cancelEdit(task)"></task-editor>
+                </div>
+
+                <div class="dndPlaceholder k-bg-light-0 k-dark p-2 m-2">
+                    Drop it here at <b>{a stage a}</b>.
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>

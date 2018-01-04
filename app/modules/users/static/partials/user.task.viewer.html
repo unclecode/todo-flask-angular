@@ -1,0 +1,88 @@
+<div class="card-body task  task-type-{a task.type a}" id="{a task.task_id a}"
+     data-notes = "{a task.notes_count  a}"
+     ng-class = "{'has-notes': task.notes_count != 0 }">
+    <div class="drag-handler  {a 'k-bg-' + vm.tasks[stage].ui.color + '-light' a}"
+         ng-click="vm.selectTask($event, stage, task)"
+         ng-class=" {'selected k-bg-yellow-impo': task.selected}"
+         dnd-draggable="task"
+         dnd-type="task.status"
+         dnd-disable-if="task.status == 'done'"
+         dnd-effect-allowed="move"
+         dnd-moved="vm.tasks[stage].tasks.splice($index, 1)">
+        <h6 class="card-subtitle mb-2 font-weight-bold k-{a vm.tasks[stage].ui.color a}"
+            ng-class="{'k-dark' :  vm.tasks[stage].ui.color == 'yellow' }">
+            <!--{a task.title | titlecase a}-->
+            {a vm.getLeftTime(task) | titlecase a} {a task.time.delayed ? 'delayed' : 'left' a}
+        </h6>
+        <h6 class="card-subtitle mb-2 task-details task-details text-muted">
+            <h6 class="mb-1">
+                <small>
+                    {a task.time.duration + ' ' + task.time.duration_type a}, {a
+                    task.time.updated[1] a}
+                </small>
+            </h6>
+            <h6 class="tags ml-0 mb-1">
+                <a href="#{a tag a}"
+                   class="badge k-white k-bg-{a vm.tasks[stage].ui.color a} mr-1 ml-0"
+                   ng-repeat="tag in task.tags">#{a tag a}</a>
+            </h6>
+        </h6>
+    </div>
+    <div class="card-text mb-2 task-content" ng-bind-html="task.content">
+    </div>
+
+    <div class="">
+        <a href="" class="card-link k-link-{a vm.tasks[stage].ui.fcolor a} font-weight-bold"
+           ng-click="task.doIt('', vm.moveTask)"
+           ng-if="vm.tasks[stage].ui.action">{a vm.tasks[stage].ui.action a}</a>
+
+        <a href="" class="card-link k-link-dark"
+           ng-if="vm.tasks[stage].ui.action"
+           ng-click="task.edit()">Edit</a>
+
+        <a href="" class="card-link k-link-dark"
+           ng-if="vm.tasks[stage].ui.action"
+           ng-click="task.openNotes()">Note ({a task.notes_count a})</a>
+
+        <a href="" class="card-link k-link-dark"
+           ng-if="vm.tasks[stage].ui.action"
+           ng-click="vm.duplicateTask($index, task)">Duplicate</a>
+        <a href="" class="card-link k-link-dark"
+           ng-click="task.ignore(vm.ignoreTask)">Ignore</a>
+    </div>
+</div>
+<!--<note-viewer ng-if="task.addingNote"></note-viewer>-->
+
+<div class="notes"  ng-if="task.addingNote">
+    <ul class="list-group list-group-flush">
+        <li class="note-editor-li list-group-item">
+            <div class="note-editor-container">
+                <summernote on-init="summernoteInit(this)" config="summernoteOption"
+                            ng-model="task.newNote"></summernote>
+            </div>
+        </li>
+        <li class="note-editor-li list-group-item p-0">
+            <div class="note-editor-toolbar text-right k-bg-light-0 p-1 px-2">
+                <a href="" class="card-link k-link-{a vm.tasks[stage].ui.fcolor a} "
+                   ng-click="task.addNote(task.newNote)">Save Note</a>
+                <a href="" class="card-link k-link-{a vm.tasks[stage].ui.fcolor a} "
+                   ng-click="task.newNote = ''">Clear</a>
+                <a href="" class="card-link mr-4 k-link-{a vm.tasks[stage].ui.fcolor a} "
+                   ng-click="task.addingNote = false">Close</a>
+            </div>
+        </li>
+        <li class="list-group-item k-bg-{a vm.tasks[stage].ui.fcolor a}-light" ng-repeat="note in task.notes">
+            <div class="note-content" ng-bind-html="note.note"></div>
+            <div class="note-toolbar">
+                <div class="text-right">
+                    <small class="">
+                        <a href="" class="card-link mr-2 k-link-{a vm.tasks[stage].ui.fcolor a}"
+                           ng-click="task.removeNote(note.index)">Remove</a>
+                    </small>
+                    <small class="mr-3">{a vm.unixTimeStampToHumanize(note.time_created) a}</small>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+
