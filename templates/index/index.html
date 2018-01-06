@@ -14,3 +14,20 @@
     </p>
 </div>
 {% endblock %}
+
+
+{% block style_top %}
+{% assets "css_all" %}
+    <link rel="stylesheet" href="{{ ASSET_URL }}"/>
+{% endassets %}
+{% endblock  %}
+
+
+{% block script_bottom %}
+{% assets "js_app" %}
+    <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+{% endassets %}
+{% assets "user_view_js" %}
+    <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+{% endassets %}
+{% endblock %}

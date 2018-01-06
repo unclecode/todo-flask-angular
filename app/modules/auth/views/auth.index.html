@@ -1,8 +1,11 @@
 {% extends "/layouts/layoutCenter.html" %}
 
-{% block style_top%}
-<link rel="stylesheet" href="{{ url_for('auth.static', filename='css/auth.css') }}">
-{% endblock style_top %}
+{% block style_top %}
+<!--<link rel="stylesheet" href="{{ url_for('auth.static', filename='css/auth.css') }}">-->
+{% assets "css_auth" %}
+    <link rel="stylesheet" href="{{ ASSET_URL }}"/>
+{% endassets %}
+{% endblock  %}
 
 {% block navbar %}
 {% endblock navbar %}
@@ -19,5 +22,8 @@
 
 
 {% block script_bottom %}
-<script src="{{ url_for('auth.static', filename ='js/auth.app.js') }}"></script>
+    <!--<script src="{{ url_for('auth.static', filename ='js/auth.app.js') }}"></script>-->
+    {% assets "js_app_auth" %}
+    <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+    {% endassets %}
 {% endblock script_bottom %}

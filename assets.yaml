@@ -2,24 +2,51 @@ js_app:
   contents:
     - js/app/*.js
   filters: jsmin
-  output: js/packed_app.js
+  output: out/packed_app.js
+js_app_auth:
+  contents:
+    - auth/js/*.js
+  filters: jsmin
+  output: out/packed_app_auth.js
+js_app_user:
+  contents:
+    - users/js/*.js
+  filters: jsmin
+  output: out/packed_app_user.js
 js_lib_ie:
   filters: jsmin
   contents:
     - js/libs/ie/*.js
-  output: js/packed_lib_ie.js
+  output: out/packed_lib_ie.js
 css_all:
   contents:
     - css/kstyle.css
   filters: cssutils
-  output: css/packed_all.css
-user_view_js:
+  output: out/packed_all.css
+css_auth:
   contents:
-    - users/static/c
+    - auth/css/*.css
+  filters: cssutils
+  output: out/packed_auth.css
+css_users:
+  contents:
+    - users/css/*.css
+  filters: cssutils
+  output: out/packed_users.css
+#user_view_js:
+#  contents:
+#    - users/js/*.js
+#  output: out/packed_user.view.js
+#  filters: jsmin
+#auth_view_js:
+#  contents:
+#    - auth/js/*.js
+#  output: out/packed_auth.view.js
+#  filters: jsmin
 less_all:
   contents:
     - css/less/*.less
-  output: css/compiled_style.css
+  output: out/compiled_style.css
   filters: less
 
 # js_lib_ie = Bundle('js/libs/ie/*.js', filters='jsmin', output='js/packed_lib_ie.js')

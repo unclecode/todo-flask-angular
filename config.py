@@ -47,29 +47,36 @@ class Config():
 
 
     # S3 Bucket
+    USE_FLASK_S3 = True
+    REFRESH_FLASK_S3 = False
     FLASKS3_BUCKET_NAME = 'unclecode.test.assets'
-    AWS_ACCESS_KEY_ID = "AKIAIJ7GI62JML4A3G6Q"
-    AWS_SECRET_ACCESS_KEY = "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"
+    AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID', '')
+    AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY', '')
     FLASKS3_REGION = "ap-southeast-1"
     FLASKS3_FORCE_MIMETYPE = True
     FLASKS3_USE_HTTPS = False
     FLASKS3_GZIP = True
-    FLASKS3_DEBUG = False
-    FLASKS3_ACTIVE = False
+    # Indicate if Flask3S should work even when app is running in debug mode
+    FLASKS3_DEBUG = True
+    FLASKS3_ACTIVE = True
 
     #Flask Assets
-    ASSETS_DEBUG = True
-    FLASK_ASSETS_USE_S3 = False
+    USE_FLASK_ASSETS = True
+    # If flask-assets should work when app is running in debug?
+    ASSETS_DEBUG = False
+    FLASK_ASSETS_USE_S3 = USE_FLASK_S3
 
     TEMPLATES_AUTO_RELOAD = False
     THREADS_PER_PAGE = 2
     # Enable protection agains *Cross-site Request Forgery (CSRF)*
     CSRF_ENABLED = True
     # Use a secure, unique and absolutely secret key for
-    CSRF_SESSION_KEY = config_data.get('CSRF', 'e06f08d32ede16d1c911c01b93f7ae79deeaca48db5cb7ed')
+    CSRF_SESSION_KEY = os.environ.get('CSRF', '')
+    #CSRF_SESSION_KEY = config_data.get('CSRF', 'e06f08d32ede16d1c911c01b93f7ae79deeaca48db5cb7ed')
     # Secret key for signing cookies
     # Follow this to have good key import os; key = os.urandom(24)
-    SECRET_KEY = config_data.get('SECRET_KEY', '7a09ed6bec52ecc6c06039d965e466be85f8bd3e3d87b33b')
+    SECRET_KEY = os.environ.get('SECRET_KEY_COOKIE', '')
+    #SECRET_KEY = config_data.get('SECRET_KEY', '7a09ed6bec52ecc6c06039d965e466be85f8bd3e3d87b33b')
 
     def getConfigMode(self):
         return '{0} at {1}:{2}/'.format(Config.CONFIG_NAME, Config.HOST, str(Config.PORT))

@@ -93,3 +93,5 @@ Contact GitHub API Training Shop Blog About
 .idea/
 flask_session/
 app/.log/
+.DS_Store
+statics/.webassets-cache

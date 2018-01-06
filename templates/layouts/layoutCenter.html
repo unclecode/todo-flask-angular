@@ -23,8 +23,7 @@
     {% block style_top %}{% endblock style_top %}
 </head>
 {% if page_ctrl %}
-<body ng-controller="{{ page_ctrl or "
-" }}" >
+<body ng-controller="{{ page_ctrl or "" }}" >
 {% else %}
 <body>
 {% endif %}
@@ -151,7 +150,11 @@
 
 <script src="{{ url_for('static', filename ='js/libs/angular-summernote.js') }}"></script>
 
-<script src="{{ url_for('static', filename ='js/app/app.js') }}"></script>
+<!--<script src="{{ url_for('static', filename ='js/app/app.js') }}"></script>-->
+
+{% assets "js_app" %}
+    <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+{% endassets %}
 
 {% block script_bottom %}{% endblock script_bottom %}
 

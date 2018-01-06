@@ -1,7 +1,10 @@
 {% extends "/layouts/layoutCenter.html" %}
 
 {% block style_top%}
-<link rel="stylesheet" href="{{ url_for('users.static', filename='css/users.css') }}">
+<!--<link rel="stylesheet" href="{{ url_for('users.static', filename='css/users.css') }}">-->
+{% assets "css_users" %}
+    <link rel="stylesheet" href="{{ ASSET_URL }}"/>
+{% endassets %}
 {% endblock style_top %}
 {% block header %}
 <nav class="navbar navbar-expand-lg navbar-light k-bg-yellow k-texture-crissxcross">
@@ -40,6 +43,11 @@
 {% endblock content %}
 
 {% block script_bottom %}
-<script src="{{ url_for('users.static', filename ='js/users.app.js') }}"></script>
-<script src="{{ url_for('users.static', filename ='js/users.directive.task.editor.js') }}"></script>
+<!--<script src="{{ url_for('users.static', filename ='js/users.app.js') }}"></script>-->
+<!--<script src="{{ url_for('users.static', filename ='js/users.directive.task.editor.js') }}"></script>-->
+    {% assets "js_app_user" %}
+    <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+    {% endassets %}
+
+
 {% endblock script_bottom %}

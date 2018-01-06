@@ -109,15 +109,16 @@ for route in routes:
 socketio = SocketIO()
 socketio.init_app(app)
 
-from flask_assets import Environment, Bundle
-from webassets.loaders import YAMLLoader
-assets = Environment(app)
-assets.from_yaml( app.config['BASE_DIR'] + '/assets.yaml')
+if app.config['USE_FLASK_ASSETS']:
+    from flask_assets import Environment, Bundle
+    from webassets.loaders import YAMLLoader
+    assets = Environment(app)
+    assets.from_yaml( app.config['BASE_DIR'] + '/assets.yaml')
 
-from flask_s3 import FlaskS3, create_all
-s3 = FlaskS3(app)
-
-if False:
+if app.config['REFRESH_FLASK_S3']:
+    from flask_s3 import FlaskS3, create_all
+    s3 = FlaskS3(app)
     create_all(app)
+    #create_all(app, filepath_filter_regex = "^out")
     #create_all(app,               user="AKIAIJ7GI62JML4A3G6Q",               password = "Ae/Y/t7UYOk/cSunSPkpQo9erFXdG05+1BRqAha7",               bucket_name= "unclecode.test.assets",               location="ap-southeast-1")
 
