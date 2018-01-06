@@ -39,7 +39,7 @@ app.config.from_object('config.' + os.environ.get('CONFIG_MOD', 'LocalDev'))
 # set the secret key.  keep this really secret:
 app.config['SESSION_TYPE'] = 'filesystem'
 app.config['PERMANENT_SESSION_LIFETIME'] = datetime.timedelta(hours=1)
-from app.lib.mongoFlaskSession import *
+from app.libs.mongoFlaskSession import *
 app.session_interface = MongoSessionInterface(db=app.config['DATABASES']['dbname'])
 Session().init_app(app)
 api = Api(app)

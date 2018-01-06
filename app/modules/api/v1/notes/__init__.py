@@ -3,7 +3,7 @@ from flask import Blueprint, url_for
 from flask_restful import Resource, reqparse, marshal, Api, inputs
 
 import json, os, re, time
-from app.lib import *
+from app.libs import *
 
 from app import tokenAuth, app
 from app.models.task import Task

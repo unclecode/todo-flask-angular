@@ -3,7 +3,7 @@ from flask import Blueprint, render_template, abort, session, redirect, request
 from flask_restful import Resource, reqparse, fields, marshal, marshal_with, Api
 import json, os, re, time
 
-from app.lib import *
+from app.libs import *
 from app import tokenAuth, app, cache
 from app.models.user import User
 from app.models.validators import *
