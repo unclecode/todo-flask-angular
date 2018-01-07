@@ -113,16 +113,6 @@ class User(db.DynamicDocument, UserMixin):
     def get_id(self):
         return unicode(self.session_token)
 
-    def is_authenticated(self):
-        return self.authenticated
-
-    def is_anonymous(self):
-        return False
-
-    def is_active(self):
-        """True, as all users are active."""
-        return self.is_account_verified()
-
     def generate_auth_token(self, expiration=600):
         s = Serializer(app.config['SECRET_KEY'], expires_in=expiration)
         self.last_token = s.dumps({'email':self.id})

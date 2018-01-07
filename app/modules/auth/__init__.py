@@ -1,7 +1,7 @@
 __author__ = 'unclecode'
 
 from app import basicAuth, tokenAuth
-from flask import Blueprint, render_template, abort, session, redirect, request, g, jsonify, render_template_string
+from flask import Blueprint, render_template, abort, session, redirect, request, g, jsonify, render_template_string, make_response
 from flask_login import login_user, logout_user, login_required, current_user
 from flask_restful import reqparse
 from app.models.user import User
@@ -25,7 +25,7 @@ def load_user(session_token):
 @mod_auth.route('/')
 def index():
     # show login page
-    if current_user.get_id() and current_user.is_authenticated():
+    if current_user.get_id() and current_user.is_authenticated:
         return redirect('/users')
     return render_template("auth.index.html")
     pass
@@ -67,7 +67,7 @@ def me():
 def login():
     # first a simple login based on username and pwd
     # then use flask-login to login the user with login_user
-    if current_user.get_id() and current_user.is_authenticated():
+    if current_user.get_id() and current_user.is_authenticated:
         current_user.clear_auth_token()
         logout_user()
         return jsonify({'result': False, 'code':-1, "msg":"Duplicate login detected!"}), 400
@@ -123,13 +123,15 @@ def logout2():
     current_user.save()
     logout_user()
     session.clear()
-    return redirect('/')
+    resp = make_response(redirect('/'))
+    resp.set_cookie('remember_token', expires=0)
+    return resp
 
 
 @login_manager.unauthorized_handler
 def unauthorized():
     # do stuff
-    return 'unauthorized'
+    return redirect('/auth')
 
 # @mod_auth.route('/settings')
 # @login_required
