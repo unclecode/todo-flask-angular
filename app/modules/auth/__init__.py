@@ -25,6 +25,8 @@ def load_user(session_token):
 @mod_auth.route('/')
 def index():
     # show login page
+    if current_user and current_user.is_authenticated():
+        return redirect('/users')
     return render_template("auth.index.html")
     pass
 
@@ -65,7 +67,7 @@ def me():
 def login():
     # first a simple login based on username and pwd
     # then use flask-login to login the user with login_user
-    if current_user and current_user.is_authenticated:
+    if current_user and current_user.is_authenticated():
         current_user.clear_auth_token()
         logout_user()
         return jsonify({'result': False, 'code':-1, "msg":"Duplicate login detected!"}), 400
@@ -75,6 +77,8 @@ def login():
     if not user or not user.verify_pwd(args['pwd']):
         return jsonify({'result':False, 'code':-1, 'msg':"Login failed! Wrong username, password."}), 400
 
+    user.authenticated = True
+    user.save()
     login_user(user, args['remember'])
     return jsonify({'result':True})
 
@@ -106,6 +110,8 @@ def verify_token(token):
 @mod_auth.route('/logout')
 @login_required
 def logout():
+    current_user.authenticated = False
+    current_user.save()
     logout_user()
     session.clear()
     return jsonify({'result':True})
@@ -113,8 +119,11 @@ def logout():
 @mod_auth.route('/logout2')
 @login_required
 def logout2():
+    current_user.authenticated = False
+    current_user.save()
     logout_user()
-    return redirect('/auth')
+    session.clear()
+    return redirect('/')
 
 
 @login_manager.unauthorized_handler

@@ -1,9 +1,15 @@
 __author__ = 'unclecode'
 from flask import Flask, render_template, session, make_response, request
 from flask_socketio import SocketIO
+
 from flask_session import Session
+from flask_session import MongoDBSessionInterface
+
 from flask_restful import Resource, Api
+
 from flask_mongoengine import MongoEngine, BaseQuerySet
+from mongoengine.connection import get_db, connect
+
 from flask_httpauth import HTTPBasicAuth, HTTPTokenAuth
 from flask_login import LoginManager, current_user
 from flask_cache import Cache
@@ -36,22 +42,22 @@ cache = Cache(config={
 # Configurations
 app.config.from_object('config.' + os.environ.get('CONFIG_MOD', 'LocalDev'))
 
-# set the secret key.  keep this really secret:
-app.config['SESSION_TYPE'] = 'filesystem'
-app.config['PERMANENT_SESSION_LIFETIME'] = datetime.timedelta(hours=1)
-from app.libs.mongoFlaskSession import *
-app.session_interface = MongoSessionInterface(db=app.config['DATABASES']['dbname'])
-Session().init_app(app)
-api = Api(app)
-
-mail = Mail()
-mail.init_app(app)
-
 print " * Connecting to MongoDB & Redis"
 # Define the database object which is imported by modules and controllers
 
 mongodb = pymongo.MongoClient(app.config['DATABASES']['url'] or None)[app.config['DATABASES']['dbname']]
 db = MongoEngine(app)
+
+# set the secret key.  keep this really secret:
+app.config['SESSION_TYPE'] = 'mongodb'
+app.config['PERMANENT_SESSION_LIFETIME'] = datetime.timedelta(hours=1)
+app.session_interface = MongoDBSessionInterface(connect(), app.config['DATABASES']['dbname'], 'sessions', 'ktodo')
+
+Session().init_app(app)
+api = Api(app)
+
+mail = Mail()
+mail.init_app(app)
 
 app.jinja_env.globals.update(session=session)
 @app.template_filter('ctime')
@@ -85,6 +91,12 @@ def server_error(error):
 @app.errorhandler(429)
 def ratelimit_handler(e):
     return make_response(jsonify(error="api rate limit exceeded %s" % e.description), 429)
+
+# @app.before_request
+# def before_request():
+#     session.permanent = True
+#     app.permanent_session_lifetime = datetime.timedelta(minutes=20)
+#     session.modified = True
 
 from app.modules.index import mod_index
 from app.modules.api.v1.users import api_user
