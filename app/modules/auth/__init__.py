@@ -25,7 +25,7 @@ def load_user(session_token):
 @mod_auth.route('/')
 def index():
     # show login page
-    if current_user and current_user.is_authenticated():
+    if current_user.get_id() and current_user.is_authenticated():
         return redirect('/users')
     return render_template("auth.index.html")
     pass
@@ -67,7 +67,7 @@ def me():
 def login():
     # first a simple login based on username and pwd
     # then use flask-login to login the user with login_user
-    if current_user and current_user.is_authenticated():
+    if current_user.get_id() and current_user.is_authenticated():
         current_user.clear_auth_token()
         logout_user()
         return jsonify({'result': False, 'code':-1, "msg":"Duplicate login detected!"}), 400

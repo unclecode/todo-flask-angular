@@ -109,3 +109,13 @@ class Release(Config):
     CONFIG_MOD = '{0} at {1}:{2}/'.format(CONFIG_NAME, HOST, str(PORT))
     SERVER_ADDRESS = 'http://{0}:{1}/'.format(HOST, str(PORT))
     TEMPLATES_AUTO_RELOAD = True
+
+    # Indicate if Flask3S should work even when app is running in debug mode
+    FLASKS3_DEBUG = True
+    FLASKS3_ACTIVE = True
+
+    #Flask Assets
+    USE_FLASK_ASSETS = True
+    # If flask-assets should work when app is running in debug?
+    ASSETS_DEBUG = False
+    FLASK_ASSETS_USE_S3 = True
