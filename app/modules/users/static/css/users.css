@@ -229,3 +229,8 @@ main > .container-fluid, main > .container {
 .task-content .task-headline{
     font-weight: bold;
 }
+
+
+.card-link+.card-link {
+    margin-left: 0.4rem;
+}
