@@ -105,9 +105,9 @@ class Release(Config):
     EXE_MODE = 'prc'
     PORT = 80
     HOST = '0.0.0.0'
-    CONFIG_NAME = "Release Server"
+    CONFIG_NAME = "Release Server (52.221.90.85)"
     CONFIG_MOD = '{0} at {1}:{2}/'.format(CONFIG_NAME, HOST, str(PORT))
-    SERVER_ADDRESS = 'http://{0}:{1}/'.format(HOST, str(PORT))
+    SERVER_ADDRESS = 'http://todo.kidocode.com/'
     TEMPLATES_AUTO_RELOAD = True
 
     # Indicate if Flask3S should work even when app is running in debug mode

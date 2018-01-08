@@ -34,7 +34,7 @@ def index():
 def request_verify(email):
     user = User.objects(email=email).first()
     if user and not user.is_account_verified():
-        email = "unclecode@kidocode.com"
+        #email = "unclecode@kidocode.com"
         #html="""<div>Click <a href="{0}auth/verify/{1}/{2}" target="_blank">here</a></div>""".format(app.config['SERVER_ADDRESS'], email, user.account_active_token),
         msg = Message(
             html=render_template("auth.verify_email.html").format(app.config['SERVER_ADDRESS'], email, user.account_active_token),
@@ -49,7 +49,13 @@ def verify(email, token):
     user = User.objects(email=email).first()
     if user:
         res = user.verify_account(token)
-        return redirect('/auth?email={email}&v='.format(email=email) + ('1' if res else '0'))
+        if current_user.is_authenticated:
+            return redirect('/auth/logout2?email={email}/v='.format(email=email) + ('1' if res else '0'))
+            #return redirect('/users?verified')
+        else:
+            return redirect('/auth?email={email}&v='.format(email=email) + ('1' if res else '0'))
+    if current_user.is_authenticated:
+        return redirect('/auth/logout2?email={email}/v=0'.format(email=email))
     return redirect('/auth?email={email}/v=0'.format(email=email))
     #return jsonify({'results':res, 'msg': 'Account already verified' if res else ''}), 100 if res else 400
 
@@ -116,13 +122,16 @@ def logout():
     session.clear()
     return jsonify({'result':True})
 
-@mod_auth.route('/logout2')
-@login_required
-def logout2():
+def _logout():
     current_user.authenticated = False
     current_user.save()
     logout_user()
     session.clear()
+
+@mod_auth.route('/logout2')
+@login_required
+def logout2():
+    _logout()
     resp = make_response(redirect('/'))
     resp.set_cookie('remember_token', expires=0)
     return resp
