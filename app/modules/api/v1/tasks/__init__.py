@@ -11,6 +11,8 @@ from app.models.validators import *
 
 from datetime import datetime, timedelta
 
+from mongoengine import Q
+
 api_task = Blueprint('api_task', __name__)
 
 post_parser = reqparse.RequestParser(bundle_errors=True)
@@ -135,10 +137,10 @@ class TaskListApi(Resource):
             tasks = Task.objects(**criteria).order_by( sortedBy).skip(page_no*10).limit(10).as_pymongo()
         else:
             regx = re.compile(query, re.IGNORECASE)
-            criteria.update({ '$or':[
+            criteria.update({ '__raw__' : {'$or':[
                 {"content": regx},
-                {"notes__note": regx}
-            ]})
+                {"notes.note": regx}
+            ]}})
             #tasks = Task.objects(**criteria).search_text(query).skip(page_no*10).limit(10).as_pymongo()
             tasks = Task.objects(**criteria).order_by(sortedBy).skip(page_no*10).limit(10).as_pymongo()
 
