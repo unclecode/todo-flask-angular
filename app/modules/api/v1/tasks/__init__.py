@@ -135,10 +135,10 @@ class TaskListApi(Resource):
             tasks = Task.objects(**criteria).order_by( sortedBy).skip(page_no*10).limit(10).as_pymongo()
         else:
             regx = re.compile(query, re.IGNORECASE)
-            criteria.update({
-                "content": regx,
-                "notes__note": regx
-            })
+            criteria.update({ '$or':[
+                {"content": regx},
+                {"notes__note": regx}
+            ]})
             #tasks = Task.objects(**criteria).search_text(query).skip(page_no*10).limit(10).as_pymongo()
             tasks = Task.objects(**criteria).order_by(sortedBy).skip(page_no*10).limit(10).as_pymongo()
 
